@@ -25,7 +25,7 @@ public class PosMachine {
                         ReceiptItem existingReceiptItem = receiptItemMap.get(barcode);
                         existingReceiptItem.setQuantity(existingReceiptItem.getQuantity() + 1);
                     } else {
-                        ReceiptItem newReceiptItem = new ReceiptItem(item.getName(),1,  item.getPrice());
+                        ReceiptItem newReceiptItem = new ReceiptItem(item.getName(), item.getPrice());
                         receiptItems.add(newReceiptItem);
                         receiptItemMap.put(barcode, newReceiptItem);
                     }

@@ -6,7 +6,7 @@ public class ReceiptItem {
     private final int unitPrice;
     private int subTotal;
 
-    public ReceiptItem(String name, int quantity, int unitPrice) {
+    public ReceiptItem(String name, int unitPrice) {
         this.name = name;
         this.quantity = 1;
         this.unitPrice = unitPrice;
