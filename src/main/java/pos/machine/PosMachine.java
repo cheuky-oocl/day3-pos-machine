@@ -8,6 +8,7 @@ import java.util.Map;
 public class PosMachine {
     public String printReceipt(List<String> barcodes) {
         List<ReceiptItem> receiptItems = decodeToItems(barcodes);
+        Receipt receipt = calculateCost(receiptItems);
     private List<ReceiptItem> decodeToItems (List<String> barcodes){
         List<Item> allItems = loadAllItems();
         List<ReceiptItem> receiptItems = new ArrayList<>();
@@ -36,5 +37,27 @@ public class PosMachine {
 
     private List<Item> loadAllItems(){
         return ItemsLoader.loadAllItems();
+    }
+
+    private Receipt calculateCost(List<ReceiptItem> receiptItems){
+        List<ReceiptItem> receiptItemsWithItemCost = calculateItemsCost(receiptItems);
+        int totalPrice = calculateTotalPrice(receiptItemsWithItemCost);
+        return new Receipt(receiptItemsWithItemCost, totalPrice);
+    }
+
+    private List<ReceiptItem> calculateItemsCost(List<ReceiptItem> receiptItems){
+        for (ReceiptItem receiptItem : receiptItems) {
+            int subTotal = receiptItem.getQuantity() * receiptItem.getPrice();
+            receiptItem.setSubTotal(subTotal);
+        }
+        return receiptItems;
+    }
+
+    private int calculateTotalPrice(List<ReceiptItem> receiptItems){
+        int totalPrice = 0;
+        for (ReceiptItem receiptItem : receiptItems) {
+            totalPrice += receiptItem.getSubTotal();
+        }
+        return totalPrice;
     }
 }
